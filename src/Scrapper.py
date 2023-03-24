@@ -1,11 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import platform
 
 URL_TEST = 'https://www.adidas.com.ar/remera-argentina-campeon-2022/IR0032.html?cm_sp=SLOT-4.6-_-HOME_%3F_%3F_HOME_%3F-_-PRODUCTSELECTIONCAROUSEL-PRODUCT-CARD-_-1007018'
 URL = "https://www.adidas.com.ar/camiseta-titular-argentina-3-estrellas-2022/IB3593.html?cm_sp=SLOT-4.5-_-HOME_%3F_%3F_HOME_%3F-_-PRODUCTSELECTIONCAROUSEL-PRODUCT-CARD-_-1007018"
 
-
-DRIVER_URL = r'C:\Users\franc\Documents\GitHub\camiseta_scapper\chromedriver'
+DRIVER_URL = ".\\chromedriver_win32.exe" if platform.system() == 'Windows' else "./chromedriver/chromedriver_linux"
 
 
 class WebScrapper:
@@ -15,10 +15,8 @@ class WebScrapper:
 
     def initWebDriver(self):
         try:
-            self.webdriver = webdriver.Chrome(executable_path=DRIVER_URL.join("\\chromedriver_win32.exe"), options=self.options)
-        except:
-            self.webdriver = webdriver.Chrome(executable_path="./chromedriver/chromedriver_linux")
-        else:        
+            self.webdriver = webdriver.Chrome(executable_path=DRIVER_URL, options=self.options)
+        except:          
             print('Hubo un error al iniciar webdriver')
             raise Exception
 
