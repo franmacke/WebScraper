@@ -1,8 +1,8 @@
-
+import platform
 
 class Database:
     def __init__(self) -> None:
-        self.url = '.\\data\\db.txt'
+        self.url = '.\\data\\db.txt' if platform.system() == "Windows" else "./data/db.txt"
         self.usuarios = self.loadUsers()
 
     def loadUsers(self):
@@ -16,7 +16,7 @@ class Database:
     def createUser(self, id):
 
         if type(id) is not int:
-            return 
+            raise TypeError
 
         if self.isRegistered(id):
             return 'Ya estas registrado.'

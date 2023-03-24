@@ -17,7 +17,10 @@ class WebScrapper:
         try:
             self.webdriver = webdriver.Chrome(executable_path=DRIVER_URL.join("\\chromedriver_win32.exe"), options=self.options)
         except:
+            self.webdriver = webdriver.Chrome(executable_path="./chromedriver/chromedriver_linux")
+        else:        
             print('Hubo un error al iniciar webdriver')
+            raise Exception
 
 
     def update(self):

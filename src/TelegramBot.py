@@ -22,8 +22,12 @@ class TelegramBot:
     def getMessages(self):
         response = requests.get(f'https://api.telegram.org/bot{self.token}/getUpdates?offset={self.offset}').text
         response_body = json.loads(response)
-
-        return response_body['result']
+        
+        try:
+            return response_body['result']
+        except:
+            print("Error en la respuesta")
+            return []
 
     def getUsers(self):
         mensajes = self.getMessages()
