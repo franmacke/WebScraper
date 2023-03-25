@@ -17,10 +17,9 @@ class Application:
         self.scrapper.initWebDriver()
         estado = False
 
-        while not estado:
+        while True:
             estado = self.scrapper.update()
             self.bot.update(estado)
-
             print(datetime.datetime.now())
 
             time.sleep(1)

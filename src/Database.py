@@ -1,8 +1,16 @@
-import platform
+import platform, os
+from dotenv import load_dotenv
+
+DEBUG = os.getenv('DEBUG')
+
+if DEBUG:
+    FILE_NAME = 'db_mock.txt'
+else:
+    FILE_NAME = 'db.txt'
 
 class Database:
     def __init__(self) -> None:
-        self.url = '.\\data\\db.txt' if platform.system() == "Windows" else "./data/db.txt"
+        self.url = f'.\\data\\{FILE_NAME}' if platform.system() == "Windows" else "./data/{FILE_NAME}"
         self.usuarios = self.loadUsers()
 
     def loadUsers(self):
@@ -24,7 +32,6 @@ class Database:
         self.writeId(id)
 
         return 'Registrado exitosamente'
-    
     
     def writeId(self, id):
         with open(self.url, 'a') as file:

@@ -7,10 +7,22 @@ class TelegramBot:
         self.token = token
         self.offset = 0
         self.usuarios = Database()
+        self.prevState = {
+            'XS': False,
+            'S': False,
+            'M': False,
+            'L': False,
+            'XL': False,
+            '2XL': False
+        }
 
-    def estaLaCamiseta(self):
-        for usuario in self.usuarios:
-            self.sendMessage('Hay camisetas de algun talle.', usuario)
+    def estaLaCamiseta(self, estado):
+        tallesDisponibles = [key for key, value in estado.items() if value]
+        talles = ''.join(tallesDisponibles)
+
+        for usuario in self.usuarios.getUsers():
+            self.sendMessage(f'Hay camisetas de talle: {talles}', usuario)
+            self.sendMessage(f'https://www.adidas.com.ar/camiseta-titular-argentina-3-estrellas-2022/IB3593.html?cm_sp=SLOT-4.5-_-HOME_%3F_%3F_HOME_%3F-_-PRODUCTSELECTIONCAROUSEL-PRODUCT-CARD-_-1007018')
 
     def sendMessage(self, text, chat_id):
         try:
@@ -44,14 +56,16 @@ class TelegramBot:
                 self.sendMessage('Hola!', id)
 
             else:
-                self.sendMessage('Ya estabas registrado', id)
+                self.sendMessage('No rompas las bolas', id)
 
             self.offset = update_id + 1
 
-    def update(self, estado):
+    def update(self, estado: dict):
         self.getUsers()
 
-        if estado:
-            self.estaLaCamiseta()
+        if estado != self.prevState and len(self.prevState.keys()) > 0:
+            self.estaLaCamiseta(estado)
+
+        self.prevState = estado
 
         print("Usuarios registrados:", self.usuarios.cantidadUsuarios())
