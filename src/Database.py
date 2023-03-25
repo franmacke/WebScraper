@@ -10,7 +10,7 @@ else:
 
 class Database:
     def __init__(self) -> None:
-        self.url = f'.\\data\\{FILE_NAME}' if platform.system() == "Windows" else "./data/{FILE_NAME}"
+        self.url = f'.\\data\\{FILE_NAME}' if platform.system() == "Windows" else f"./data/{FILE_NAME}"
         self.usuarios = self.loadUsers()
 
     def loadUsers(self):
